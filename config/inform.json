@@ -1,0 +1,18 @@
+{
+  "hnu_account": {
+    "id": "学号",
+    "password": "个人门户密码"
+  },
+  "baidu_ai_account": {
+    "app_id": "",
+    "api_key": "",
+    "secret_key": ""
+  },
+  "clockin_inform": {
+    "省": "",
+    "市": "",
+    "县": "",
+    "在家详细地址": "",
+    "在校详细地址": ""
+  }
+}
