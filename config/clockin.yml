@@ -2,7 +2,7 @@ name: HNUClockIn
 
 on:
   push:
-    branches: [ master ]
+    
   schedule:
     # minute hour(UTC) day month weekday(SUN-SAT)
     - cron: '20,50 16,19,23 * * *'
