@@ -4,7 +4,7 @@
 
 在 **0点，3点，7点的20分及50分** 各尝试打卡
 
-每次尝试登陆和打卡次数通过main.py的参数控制，默认各 **5** 次，如有需求可以自行更改，包括打卡时间
+每次尝试登陆和打卡次数通过`main.py`的参数控制，默认各 **5** 次，如有需求可以自行更改，包括打卡时间，及是否在家选项，**详见步骤4**
 
 如果这几次都失败了，说明湖大服务器又gg了，第二天会有电话提醒还有各种@，这里就不做额外提醒了:)
 
@@ -82,7 +82,61 @@ HNUClockIn
 - `baidu_ai_account`: 填入刚才所注册的百度智能账号的`APP ID`，`API Key`，`Secret Key`
 - `clockin_inform`: 在家打卡时所要填写的信息，包括省，市，县和在家及在校的详细地址
 
-### 4. Publish本地仓库到Github
+### 4. 修改clockin.yml
+
+使用**记事本**等软件打开本项目中的`config/clockin.yml`
+
+1. 修改打卡时间
+
+   在第8行`- cron: '20,50 16,19,23 * * *'`
+
+   其中`20,50`表示第20和50分钟
+
+   `16,19,23`表示UTC时区的第16，19，23小时，也就是北京时间0点，3点和7点
+
+   由于是每天打卡，后面的三个`*`不需要更改
+
+   > 比如需要修改为每天北京时间1点23分打卡，则修改第8行为
+   >
+   > ````yaml
+   > -cron: '23 17 * * *'
+   > ````
+
+2. 修改每次打卡尝试次数
+
+   **每次打卡尝试次数表示每次运行程序所进行的尝试次数，运行次数通过上面的打卡时间设置**
+
+   在第28行`python main.py --at_home 0`
+
+   修改最大登陆尝试次数，在后面添加`--login_max_try 次数`
+
+   修改最大打卡尝试次数，在后面添加`--clockin_max_try 次数`
+
+   > 比如需要修改为最大登陆尝试次数10次，最大打卡尝试次数8次，则修改第28行为
+   >
+   > ```yaml
+   > python main.py --at_home 0 --login_max_try 10 --clockin_max_try 8
+   > ```
+
+3. 修改打卡位置选项
+
+   ~~众所周知~~，湖大打卡分在校和在家两种模式
+
+   因此通过at_home参数来控制这两种模式，1即为在家，0即为在校
+
+   > 比如需要修改为在家模式，则修改第28行为
+   >
+   > ```yaml
+   > python main.py --at_home 0 --login_max_try 10 --clockin_max_try 8
+   > ```
+   >
+   > 或者（因为默认at_home为1，不输入参数也可
+   >
+   > ```yaml
+   > python main.py
+   > ```
+
+### 5. Publish本地仓库到Github
 
 不熟悉Git指令的可以使用[Git Desktop](https://desktop.github.com/)
 
@@ -92,12 +146,10 @@ HNUClockIn
 
 然后点击右上角`Publish`，直到显示`Fetch origin`即发布完毕
 
-### 4. 添加Action
+### 6. 添加Action
 
 1. 在网页上打开Github，在Repository中找到刚刚创建的仓库，进入后点击Actions
-
 2. 然后点击`set up a workflow yourself ->`，会弹出一个在线文本编辑
-3. 将本项目中的`config/clockin.yml`中的全部拷入覆盖
+3. 将刚刚修改过的`config/clockin.yml`的全部拷入覆盖
 4. 点击右上角`Commit`
 5. 在Actions中出现名`HNUClockIn`的workflow即为配置完毕
-
